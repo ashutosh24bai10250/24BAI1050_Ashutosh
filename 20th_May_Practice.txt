@@ -1,0 +1,125 @@
+CREATE TABLE Persons (
+    ID INT NOT NULL,
+    FIRST_NAME VARCHAR(50) NOT NULL,
+    LAST_NAME VARCHAR(50) NOT NULL,
+    AGE INT
+);
+
+INSERT INTO Persons
+VALUES (1,'John','Smith',25);
+
+CREATE TABLE Students (
+    Roll_No INT UNIQUE,
+    Name VARCHAR(50)
+);
+
+INSERT INTO Students
+VALUES (101,'Rahul');
+
+CREATE TABLE CollegeStudents (
+    Roll_No INT UNIQUE NOT NULL,
+    Name VARCHAR(50)
+);
+
+CREATE TABLE StudentCity (
+    ID INT,
+    City VARCHAR(50) DEFAULT 'Mumbai'
+);
+
+INSERT INTO StudentCity(ID)
+VALUES (1);
+
+SELECT * FROM StudentCity;
+
+CREATE TABLE PersonAge (
+    ID INT,
+    AGE INT,
+    CHECK (AGE >= 18 AND AGE <= 23)
+);
+
+INSERT INTO PersonAge
+VALUES (1,21);
+
+CREATE TABLE EmployeeSalary (
+    ID INT,
+    SALARY INT,
+    CHECK (SALARY BETWEEN 100000 AND 500000)
+);
+
+CREATE TABLE Countries (
+    ID INT,
+    COUNTRY VARCHAR(50),
+    CHECK (COUNTRY IN ('India','Canada'))
+);
+
+ALTER TABLE Persons
+MODIFY AGE INT NOT NULL;
+
+ALTER TABLE Persons
+ADD UNIQUE (AGE);
+
+ALTER TABLE Persons
+DROP INDEX AGE;
+
+CREATE TABLE Products (
+    Product_ID INT PRIMARY KEY,
+    Product_Name VARCHAR(50)
+);
+
+CREATE TABLE ProductDetails (
+    Product_ID INT PRIMARY KEY,
+    Product_Name VARCHAR(50),
+    Product_Ref_No INT UNIQUE NOT NULL
+);
+
+INSERT INTO ProductDetails
+VALUES (1,'Laptop',19129);
+
+INSERT INTO ProductDetails
+VALUES (2,'Mobile',19130);
+
+ALTER TABLE Products
+ADD PRIMARY KEY(Product_ID);
+
+ALTER TABLE Products
+DROP PRIMARY KEY;
+
+CREATE TABLE Category (
+    Category_ID INT PRIMARY KEY,
+    Category_Name VARCHAR(50)
+);
+
+INSERT INTO Category
+VALUES (101,'Electronics');
+
+INSERT INTO Category
+VALUES (102,'Home Appliances');
+
+CREATE TABLE ProductCatalog (
+    Product_ID INT PRIMARY KEY,
+    Product_Name VARCHAR(50),
+    Category_ID INT,
+    FOREIGN KEY (Category_ID)
+    REFERENCES Category(Category_ID)
+);
+
+INSERT INTO ProductCatalog
+VALUES (1,'HP Laptop',101);
+
+INSERT INTO ProductCatalog
+VALUES (2,'Power Bank',101);
+
+INSERT INTO ProductCatalog
+VALUES (3,'Wooden Chair',102);
+
+SELECT * FROM Category;
+
+SELECT * FROM ProductCatalog;
+
+DESC Persons;
+DESC Students;
+DESC Products;
+DESC ProductCatalog;
+DESC Category;
+
+SHOW TABLES;
