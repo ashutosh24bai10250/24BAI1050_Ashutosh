@@ -1,0 +1,52 @@
+// Start Primary Node
+mongod --dbpath "C:\data\db0" --port 27017 --replSet myReplSet
+
+// Start Secondary Node 1
+mongod --dbpath "C:\data\db1" --port 27018 --replSet myReplSet
+
+// Start Secondary Node 2
+mongod --dbpath "C:\data\db2" --port 27019 --replSet myReplSet
+
+// Connect to Primary
+mongo --port 27017
+
+// Initialize Replica Set
+rs.initiate({
+   _id: "myReplSet",
+   members: [
+      { _id: 0, host: "localhost:27017" },
+      { _id: 1, host: "localhost:27018" },
+      { _id: 2, host: "localhost:27019" }
+   ]
+})
+
+// Check Replica Set Status
+rs.status()
+
+// View Replica Set Configuration
+rs.conf()
+
+// Add New Member
+rs.add("localhost:27020")
+
+// Check Primary Node
+db.isMaster()
+
+// Allow Reads on Secondary
+rs.slaveOk()
+
+// Replication Testing
+use repdb1
+
+db.student.insertOne({
+   name: "Avi"
+})
+
+db.student.find()
+
+// On Secondary
+rs.slaveOk()
+
+use repdb1
+
+db.student.find()
